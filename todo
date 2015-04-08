@@ -1,0 +1,20 @@
+Pending:
+    Generators:
+        Take
+        Delay
+        Compose
+        Sum
+        Sine
+        Square
+        Triangle
+        Repeat
+        ASDREnvelope
+        Multiply (by constant or by other signal)
+        Add
+    Make the oscilators infinite or finite length
+    Measure the speed of the generators. Make a table showing execution time as a fraction of real time.
+
+In Progress:
+    Saw, finite or infinite
+
+Done:
