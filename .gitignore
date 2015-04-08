@@ -1,5 +1,4 @@
 *.swp
-bin/
 .sconsign.dblite
-
-
+*.o
+audio
