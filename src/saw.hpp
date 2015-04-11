@@ -1,17 +1,25 @@
 #pragma once
 
 #include "generator.hpp"
+#include "generatordef.hpp"
 
-class Saw : public Generator
+class Saw: public Generator
 {
   private:
-    int start_offset;
+    double freq;
+    double length;
     double value;
     double step;
-    int total_samples;
+    long total_samples;
+    long current_sample;
+
+    void init(double freq, double length);
 
   public:
+    Saw(double freq);
     Saw(double freq, double length);
-    virtual void start(int offset);
-    virtual int generate();
+    ~Saw();
+    virtual int Generate();
+    virtual Generator* GetGenerator();
 };
+

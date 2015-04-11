@@ -1,25 +1,51 @@
 #include "saw.hpp"
 
+Saw::Saw(double freq)
+{
+    init(freq, -1);
+}
+
 Saw::Saw(double freq, double length)
 {
-    start_offset = -1;
+    init(freq, length);
+}
+
+void Saw::init(double freq, double length)
+{
+    this->freq = freq;
+    this->length = length;
+    samples = 0;
     step = 2 * freq / srate;
     value = 0;
-    total_samples = length * srate;
+    current_sample = 0;
+    total_samples = length < 0 ? -1 : length * srate;
 }
 
-void Saw::start(int offset)
+Generator* Saw::GetGenerator()
 {
-    start_offset = offset;
+    return new Saw(freq, length);
 }
 
-int Saw::generate()
+int Saw::Generate()
 {
-    for (int i = 0; i < buffer_size; i++)
+    if (samples == 0) samples = new double[buffer_size];
+
+    bool ending = total_samples >= 0 && current_sample + buffer_size >= total_samples;
+
+    int length = ending ? total_samples - current_sample : buffer_size;
+
+    for (int i = 0; i < length; i++)
     {
         samples[i] = value;
         value += step;
         if (value > 1) value -= 2;
     }
-    return -1;
+    current_sample += length;
+
+    return ending ? length : -1;
+}
+
+Saw::~Saw()
+{
+    if (samples) delete samples;
 }
